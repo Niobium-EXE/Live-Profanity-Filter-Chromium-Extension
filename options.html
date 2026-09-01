@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Profanity Filter Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Live Profanity Filter</p>
+        <h1>Settings</h1>
+        <p>Changes are saved automatically and pushed to open pages without refreshing.</p>
+      </div>
+      <label class="toggle-row"><input id="enabled" type="checkbox"> Filter enabled</label>
+    </header>
+
+    <section class="panel grid-two">
+      <div>
+        <h2>Replacement behavior</h2>
+        <label>Default replacement<input id="defaultReplacement" type="text"></label>
+        <label class="check"><input id="surroundBrackets" type="checkbox"> Surround replacements with brackets</label>
+        <label class="check"><input id="preserveCase" type="checkbox"> Preserve capitalization when possible</label>
+      </div>
+      <div>
+        <h2>Site exclusions</h2>
+        <p class="subtle">One domain per line. Subdomains are included.</p>
+        <textarea id="disabledSites" rows="7" placeholder="example.com"></textarea>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Words and phrases</h2>
+          <p class="subtle">Each entry can have its own replacement and matching behavior.</p>
+        </div>
+        <input id="search" class="search" type="search" placeholder="Search words…">
+      </div>
+
+      <div class="add-grid">
+        <label>Word or phrase<input id="newWord" type="text" placeholder="word or phrase"></label>
+        <label>Replacement<input id="newReplacement" type="text" placeholder="uses default if blank"></label>
+        <label>Match<select id="newMatch"><option value="exact">Exact</option><option value="partial">Partial</option><option value="whole">Whole containing word</option><option value="regex">Regular expression</option></select></label>
+        <label class="check inline"><input id="newRepeated" type="checkbox"> Repeated letters</label>
+        <label class="check inline"><input id="newSeparators" type="checkbox"> Spaces / - / _ between letters</label>
+        <button id="addWord" class="primary">Add word</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>On</th><th>Word / phrase</th><th>Replacement</th><th>Match</th><th>Repeat</th><th>Separators</th><th></th></tr></thead>
+          <tbody id="wordRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel grid-two">
+      <div>
+        <h2>Allowlist</h2>
+        <p class="subtle">Words or phrases here are protected from filtering. One per line.</p>
+        <textarea id="allowlist" rows="10" placeholder="class"></textarea>
+      </div>
+      <div>
+        <h2>Import from Advanced Profanity Filter</h2>
+        <p class="subtle">In APF, export your config JSON, then choose the file here or paste it below.</p>
+        <input id="apfFile" type="file" accept="application/json,.json,text/plain">
+        <textarea id="apfJson" rows="7" placeholder="Paste APF exported JSON here"></textarea>
+        <div class="button-row">
+          <button id="importApf" class="primary">Import APF settings</button>
+          <button id="exportSettings">Export my settings</button>
+        </div>
+        <p id="importMessage" class="subtle" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="panel danger-zone">
+      <div>
+        <h2>Reset</h2>
+        <p class="subtle">Restore this extension's original defaults.</p>
+      </div>
+      <button id="resetDefaults">Restore defaults</button>
+    </section>
+  </main>
+  <script src="core.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

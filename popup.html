@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Profanity Filter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="popup">
+    <header>
+      <div>
+        <h1>Live Profanity Filter</h1>
+        <p id="statusText">Loading…</p>
+      </div>
+      <label class="switch" title="Turn filtering on or off everywhere">
+        <input id="enabledToggle" type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </header>
+
+    <section class="card">
+      <h2>Quick add</h2>
+      <label>
+        Word or phrase
+        <input id="wordInput" type="text" autocomplete="off" placeholder="word or phrase">
+      </label>
+      <label>
+        Replace with
+        <input id="replacementInput" type="text" autocomplete="off" placeholder="censored">
+      </label>
+      <button id="addButton" class="primary">Add now</button>
+      <p id="message" class="message" aria-live="polite"></p>
+    </section>
+
+    <section class="card compact">
+      <label>
+        Default replacement
+        <input id="defaultReplacement" type="text" autocomplete="off">
+      </label>
+      <p class="hint">Replacements are bracketed by default, for example: <strong>[censored]</strong>.</p>
+    </section>
+
+    <footer>
+      <button id="siteToggle" class="secondary">Disable on this site</button>
+      <button id="openOptions" class="secondary">Full settings</button>
+    </footer>
+  </main>
+  <script src="core.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
