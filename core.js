@@ -26,7 +26,8 @@
 
   function defaultSettings() {
     return {
-      schemaVersion: 1,
+      schemaVersion: 2,
+      revision: 0,
       enabled: true,
       defaultReplacement: 'censored',
       surroundBrackets: true,
@@ -61,15 +62,22 @@
       : defaults.words;
 
     return {
-      schemaVersion: 1,
+      schemaVersion: 2,
+      revision: Number.isSafeInteger(raw.revision) && raw.revision >= 0 ? raw.revision : 0,
       enabled: raw.enabled !== false,
       defaultReplacement: String(raw.defaultReplacement ?? defaults.defaultReplacement),
       surroundBrackets: raw.surroundBrackets !== false,
       preserveCase: raw.preserveCase !== false,
       words,
       allowlist: Array.isArray(raw.allowlist) ? raw.allowlist.map(String).map((s) => s.trim()).filter(Boolean) : [],
-      disabledSites: Array.isArray(raw.disabledSites) ? raw.disabledSites.map(String).map(normalizeHost).filter(Boolean) : []
+      disabledSites: Array.isArray(raw.disabledSites) ? [...new Set(raw.disabledSites.map(String).map(normalizeHost).filter(Boolean))] : []
     };
+  }
+
+  function bumpRevision(raw) {
+    const settings = sanitizeSettings(raw);
+    settings.revision += 1;
+    return settings;
   }
 
   function normalizeHost(value) {
@@ -82,9 +90,14 @@
       .replace(/^\.+|\.+$/g, '');
   }
 
-  function isSiteDisabled(settings, hostname) {
+  function disabledSiteMatches(settings, hostname) {
     const host = normalizeHost(hostname);
-    return settings.disabledSites.some((site) => host === site || host.endsWith(`.${site}`));
+    if (!host) return [];
+    return settings.disabledSites.filter((site) => host === site || host.endsWith(`.${site}`));
+  }
+
+  function isSiteDisabled(settings, hostname) {
+    return disabledSiteMatches(settings, hostname).length > 0;
   }
 
   function escapeRegex(value) {
@@ -230,8 +243,10 @@
     MATCH_NAMES,
     defaultSettings,
     sanitizeSettings,
+    bumpRevision,
     normalizeWord,
     normalizeHost,
+    disabledSiteMatches,
     isSiteDisabled,
     compileRules,
     filterText,

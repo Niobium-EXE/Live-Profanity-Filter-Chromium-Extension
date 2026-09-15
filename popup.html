@@ -33,6 +33,45 @@
       <p id="message" class="message" aria-live="polite"></p>
     </section>
 
+    <section class="card">
+      <div class="card-heading">
+        <h2>Edit filter</h2>
+        <span id="filterCount" class="count"></span>
+      </div>
+      <label>
+        Filter
+        <select id="editRuleSelect"></select>
+      </label>
+      <div id="editFields" class="edit-fields">
+        <label>
+          Word or phrase
+          <input id="editWord" type="text" autocomplete="off">
+        </label>
+        <label>
+          Replace with
+          <input id="editReplacement" type="text" autocomplete="off" placeholder="uses default if blank">
+        </label>
+        <label>
+          Match
+          <select id="editMatch">
+            <option value="exact">Exact</option>
+            <option value="partial">Partial</option>
+            <option value="whole">Whole containing word</option>
+            <option value="regex">Regular expression</option>
+          </select>
+        </label>
+        <div class="check-grid">
+          <label class="check"><input id="editEnabled" type="checkbox"> Enabled</label>
+          <label class="check"><input id="editRepeated" type="checkbox"> Repeated letters</label>
+          <label class="check"><input id="editSeparators" type="checkbox"> Separators</label>
+        </div>
+        <div class="edit-actions">
+          <button id="saveEdit" class="primary">Save changes</button>
+          <button id="deleteEdit" class="danger">Delete</button>
+        </div>
+      </div>
+    </section>
+
     <section class="card compact">
       <label>
         Default replacement
